@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>jtwt.js - documentation</title>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jtwt.js"></script>
+	<script type="text/javascript">
+		$(window).load(function() {
+		
+			$('#twitter').jtwt({
+			
+				count: 5,
+				image_size: 24
+			
+			});
+			
+		});
+	</script>
+	
+	<link rel="stylesheet" href="jtwt.css" />
+	
+	<style>
+	
+* {
+
+  margin:0px;
+  padding:0px;
+  border:0px;
+  text-decoration:none;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  
+}
+
+section, article, header, footer, div { display:block; }
+
+ul, ol { list-style:none; }
+
+p { text-align: justify; }
+
+a {
+
+	color: white;
+
+	}
+	
+a:hover {
+
+	text-decoration: underline;
+
+	}
+
+body {
+
+	margin: 0px;
+	padding: 0px;
+	
+	background: #494651;
+	
+	font: 16px/26px "Helvetica Neue", "Helvetica", "Arial", Sans-Serif;
+	color: #c5c0d2;
+	text-shadow: 0px 1px 1px rgba(0,0,0,0.28);
+	
+
+	}
+	
+
+#wrapper {
+
+	width: 463px;
+	margin:  100px auto;
+
+	}
+	
+section p {
+
+	margin-bottom: 25px;
+	
+	}
+	
+section *:last-child {
+
+	margin-bottom: 0px;
+
+	}
+	
+header {
+
+	margin-bottom: 65px;
+
+	}
+	
+section {
+	
+	margin-bottom: 40px;
+
+	}
+
+header h1 {
+
+	font-size:30px;
+	line-height:40px;
+	font-weight: 300;
+
+	}
+	
+header h1 span {
+	
+	font-weight: bold;
+	color: white;
+
+	}
+	
+header p {
+	
+	margin-bottom: 30px;
+
+	}
+	
+#button {
+
+	background: #b94849;
+	color: white;
+	font-weight: bold;
+	text-transform: uppercase;
+	border-radius: 2px;
+	padding: 0px 24px;
+	line-height: 52px;
+	height: 52px;
+	display: inline-block;
+	box-shadow: 1px 1px 0px rgba(0,0,0,0.05). -1px -1px 0px rgba(0,0,0,0.05);
+	text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
+
+	}
+	
+#button:hover {
+
+	background: #a44041;
+
+	}
+	
+#button:active {
+	
+	top: 1px;
+
+	}
+	
+h2 {
+
+	color: white; 
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 20px;
+	margin-bottom: 25px;
+
+	}
+	
+p > span {
+	
+	color: white;
+
+	}	
+	
+pre {
+
+	background: #26252b;
+	padding: 20px;
+	border-radius: 2px;
+	color: white;
+	font: 12px/26px "Monaco", monospace;
+	margin-bottom: 25px;
+	text-shadow: none;
+
+	}
+	
+pre span {
+
+	color: #e25253;
+
+	}
+	
+span.comment {
+
+	color: #625f69;
+
+	}
+	
+.jtwt {
+
+	border-radius: 2px;
+	overflow: hidden;
+
+	}
+	
+.jtwt li {
+	
+	background: #38363f;
+	padding: 10px;
+	margin-bottom: 5px;
+
+	}
+	
+.jtwt .jtwt_tweet:last-child {
+
+	margin-bottom: 0px;
+
+	}
+	
+.jtwt_picture {
+
+	float: left;
+	margin-right: 10px;
+	
+	}
+	
+.jtwt_picture img {
+
+	border-radius: 2px;
+
+	}
+	
+.jtwt_tweet_text {
+
+	margin-bottom: 0px;
+
+	}
+	
+.jtwt_date {
+
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+	line-height: 12px;
+	font-size: 12px;
+	
+	}
+	
+	</style>
+</head>
+<body>
+
+	<div id="wrapper">
+	
+		<header>
+		
+			<h1><span>jtwt.js</span> - a simple jQuery plugin for the twitter JSON API</h1>
+			
+		</header>
+		
+		<section>
+		
+			<h2>Usage</h2>
+			<p>After you downloaded and unzipped jtwt you will need to implement the jQuery library in the <span>&lt;head&gt;</span> area of your document, like this:</p>
+			
+			<pre>&lt;script type="text/javascript" src="<span>js/jquery.js</span>"&gt;&lt;/script&gt;</pre>
+			
+			<p>Add the <span>jtwt.js</span> and the <span>jtwt.css</span> below the jQuery library:</p>
+
+			<pre>&lt;script type="text/javascript" src="<span>js/jtwt.min.js</span>"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="<span>css/jtwt.css</span>" /&gt;</pre>
+			
+			<p>Now initialize the jtwt plugin between a <span>$(window).load(function() {</span> and a <span>});</span>.</p>
+			
+			<pre>&lt;script type="text/javascript"&gt;
+	$(window).load(function() {
+		$('<span>#twitter</span>').jtwt({
+			username : <span class="comment">'yourusername'</span>
+		});
+	});
+&lt;/script&gt;</pre>
+			
+			<p>At last, we need to create the already declared container for our twitter widget:</p>
+			
+			<pre>&lt;div id="<span>twitter</span>">&lt;/div&gt;</pre>
+			
+		</section>
+		
+		<section>
+		
+			<h2>Demo</h2>
+			<div id="twitter"></div>
+		
+		</section>
+		
+		<section>
+		
+			<h2>Options</h2>
+			
+			<p>jtwt.js comes with a bunch of options to create the best experience for your users. </p>
+
+			<pre>$('#twitter').jtwt({
+	count : <span>int</span>, <span class="comment">// The number of displayed tweets.</span>
+	username : <span>'yourusername'</span>, <span class="comment">// Your username.</span>
+	image_size : <span>int</span>, <span class="comment">// The size of your avatar.</span>
+	loader_text : <span>'loading tweets'</span>, <span class="comment">// loading text</span>
+});</pre>
+				
+		</section>
+		
+		<section>
+		
+			<h2>License</h2>
+			<p>jtwt.js is contributed under the <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">Creative Commons Attribution 3.0 Unported</a> license. You're free to use jtwt.js in personal and commercial projects.</p>
+		
+		</section>	
+		
+		<section>
+		
+			<h2>Support</h2>
+			<p><span>jtwt.js is provided "as-is", without any warranty and professional support.</span> However, we're happy to help if we can. <a href="mailto:support@hrbor.com">Feel to drop us a line via email</a> or <a href="http://twitter.com/harborco">Twitter</a>. It may take up to 48 hours till you receive an answer.</p>
+		
+		</section>	
+		
+		<section>
+		
+			<h2>Buy me a beer</h2>
+			<p>We're working hard to make jtwt.js better. If you're happy with the plugin feel free to buy as a beer or two. Thanks for your support!</p>
+			
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+				<input type="hidden" name="cmd" value="_s-xclick">
+				<input type="hidden" name="hosted_button_id" value="8Q3CXA8XZRS9Y">
+				<input type="image" src="http://hrbor.com/labs/jtwt/img/buymeabeer.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+		
+		</section>	
+			
+	</div>
+
+</body>
+</html>
