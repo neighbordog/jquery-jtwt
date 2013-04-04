@@ -5,7 +5,7 @@
 	<title>jtwt.js - documentation</title>
 	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="jtwt.js"></script>
+	<script type="text/javascript" src="../src/jquery.jtwt.js"></script>
 	<script type="text/javascript">
 		$(window).load(function() {
 		
@@ -19,225 +19,226 @@
 		});
 	</script>
 	
-	<link rel="stylesheet" href="jtwt.css" />
+	<link rel="stylesheet" href="../src/jquery.jtwt.css" />
 	
 	<style>
 	
-* {
-
-  margin:0px;
-  padding:0px;
-  border:0px;
-  text-decoration:none;
-  font-weight: normal;
-  -webkit-font-smoothing: antialiased;
-  
-}
-
-section, article, header, footer, div { display:block; }
-
-ul, ol { list-style:none; }
-
-p { text-align: justify; }
-
-a {
-
-	color: white;
-
-	}
-	
-a:hover {
-
-	text-decoration: underline;
-
-	}
-
-body {
-
-	margin: 0px;
-	padding: 0px;
-	
-	background: #494651;
-	
-	font: 16px/26px "Helvetica Neue", "Helvetica", "Arial", Sans-Serif;
-	color: #c5c0d2;
-	text-shadow: 0px 1px 1px rgba(0,0,0,0.28);
-	
-
-	}
-	
-
-#wrapper {
-
-	width: 463px;
-	margin:  100px auto;
-
-	}
-	
-section p {
-
-	margin-bottom: 25px;
-	
-	}
-	
-section *:last-child {
-
-	margin-bottom: 0px;
-
-	}
-	
-header {
-
-	margin-bottom: 65px;
-
-	}
-	
-section {
-	
-	margin-bottom: 40px;
-
-	}
-
-header h1 {
-
-	font-size:30px;
-	line-height:40px;
-	font-weight: 300;
-
-	}
-	
-header h1 span {
-	
-	font-weight: bold;
-	color: white;
-
-	}
-	
-header p {
-	
-	margin-bottom: 30px;
-
-	}
-	
-#button {
-
-	background: #b94849;
-	color: white;
-	font-weight: bold;
-	text-transform: uppercase;
-	border-radius: 2px;
-	padding: 0px 24px;
-	line-height: 52px;
-	height: 52px;
-	display: inline-block;
-	box-shadow: 1px 1px 0px rgba(0,0,0,0.05). -1px -1px 0px rgba(0,0,0,0.05);
-	text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
-
-	}
-	
-#button:hover {
-
-	background: #a44041;
-
-	}
-	
-#button:active {
-	
-	top: 1px;
-
-	}
-	
-h2 {
-
-	color: white; 
-	font-weight: bold;
-	font-size: 20px;
-	line-height: 20px;
-	margin-bottom: 25px;
-
-	}
-	
-p > span {
-	
-	color: white;
-
-	}	
-	
-pre {
-
-	background: #26252b;
-	padding: 20px;
-	border-radius: 2px;
-	color: white;
-	font: 12px/26px "Monaco", monospace;
-	margin-bottom: 25px;
-	text-shadow: none;
-
-	}
-	
-pre span {
-
-	color: #e25253;
-
-	}
-	
-span.comment {
-
-	color: #625f69;
-
-	}
-	
-.jtwt {
-
-	border-radius: 2px;
-	overflow: hidden;
-
-	}
-	
-.jtwt li {
-	
-	background: #38363f;
-	padding: 10px;
-	margin-bottom: 5px;
-
-	}
-	
-.jtwt .jtwt_tweet:last-child {
-
-	margin-bottom: 0px;
-
-	}
-	
-.jtwt_picture {
-
-	float: left;
-	margin-right: 10px;
-	
-	}
-	
-.jtwt_picture img {
-
-	border-radius: 2px;
-
-	}
-	
-.jtwt_tweet_text {
-
-	margin-bottom: 0px;
-
-	}
-	
-.jtwt_date {
-
-	display: inline-block;
-	width: 100%;
-	text-align: right;
-	line-height: 12px;
-	font-size: 12px;
-	
-	}
-	
+		* {
+		
+		  margin:0px;
+		  padding:0px;
+		  border:0px;
+		  text-decoration:none;
+		  font-weight: normal;
+		  -webkit-font-smoothing: antialiased;
+		  
+		}
+		
+		section, article, header, footer, div { display:block; }
+		
+		ul, ol { list-style:none; }
+		
+		p { text-align: justify; }
+		
+		a {
+		
+			color: white;
+		
+			}
+			
+		a:hover {
+		
+			text-decoration: underline;
+		
+			}
+		
+		body {
+		
+			margin: 0px;
+			padding: 0px;
+			
+			background: #494651;
+			
+			font: 16px/26px "Helvetica Neue", "Helvetica", "Arial", Sans-Serif;
+			color: #c5c0d2;
+			text-shadow: 0px 1px 1px rgba(0,0,0,0.28);
+			
+		
+			}
+			
+		
+		#wrapper {
+		
+			width: 463px;
+			margin:  100px auto;
+		
+			}
+			
+		section p {
+		
+			margin-bottom: 25px;
+			
+			}
+			
+		section *:last-child {
+		
+			margin-bottom: 0px;
+		
+			}
+			
+		header {
+		
+			margin-bottom: 65px;
+		
+			}
+			
+		section {
+			
+			margin-bottom: 40px;
+		
+			}
+		
+		header h1 {
+		
+			font-size:30px;
+			line-height:40px;
+			font-weight: 300;
+		
+			}
+			
+		header h1 span {
+			
+			font-weight: bold;
+			color: white;
+		
+			}
+			
+		header p {
+			
+			margin-bottom: 30px;
+		
+			}
+			
+		#button {
+		
+			background: #b94849;
+			color: white;
+			font-weight: bold;
+			text-transform: uppercase;
+			border-radius: 2px;
+			padding: 0px 24px;
+			line-height: 52px;
+			height: 52px;
+			display: inline-block;
+			box-shadow: 1px 1px 0px rgba(0,0,0,0.05). -1px -1px 0px rgba(0,0,0,0.05);
+			text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
+		
+			}
+			
+		#button:hover {
+		
+			background: #a44041;
+		
+			}
+			
+		#button:active {
+			
+			top: 1px;
+		
+			}
+			
+		h2 {
+		
+			color: white; 
+			font-weight: bold;
+			font-size: 20px;
+			line-height: 20px;
+			margin-bottom: 25px;
+		
+			}
+			
+		p > span {
+			
+			color: white;
+		
+			}	
+			
+		pre {
+		
+			background: #26252b;
+			padding: 20px;
+			border-radius: 2px;
+			color: white;
+			font: 12px/26px "Monaco", monospace;
+			margin-bottom: 25px;
+			text-shadow: none;
+		
+			}
+			
+		pre span {
+		
+			color: #e25253;
+		
+			}
+			
+		span.comment {
+		
+			color: #625f69;
+		
+			}
+			
+		.jtwt {
+		
+			border-radius: 2px;
+			overflow: hidden;
+		
+			}
+			
+		.jtwt li {
+			
+			background: #38363f;
+			padding: 10px;
+			margin-bottom: 5px;
+		
+			}
+			
+		.jtwt .jtwt_tweet:last-child {
+		
+			margin-bottom: 0px;
+		
+			}
+			
+		.jtwt_picture {
+		
+			float: left;
+			margin-right: 10px;
+			
+			}
+			
+		.jtwt_picture img {
+		
+			border-radius: 2px;
+		
+			}
+			
+		.jtwt_tweet_text {
+		
+			margin-bottom: 0px;
+		
+			}
+			
+		.jtwt_date {
+		
+			display: inline-block;
+			width: 100%;
+			text-align: right;
+			line-height: 12px;
+			font-size: 12px;
+			
+			}
+			
 	</style>
+	
 </head>
 <body>
 
@@ -245,7 +246,7 @@ span.comment {
 	
 		<header>
 		
-			<h1><span>jtwt.js</span> - a simple jQuery plugin for the twitter JSON API</h1>
+			<h1><span>jtwt.js</span> - a simple jQuery plugin for the twitter Search API</h1>
 			
 		</header>
 		
@@ -293,10 +294,23 @@ span.comment {
 			<pre>$('#twitter').jtwt({
 	count : <span>int</span>, <span class="comment">// The number of displayed tweets.</span>
 	username : <span>'yourusername'</span>, <span class="comment">// Your username.</span>
+	query : <span>'searchquery'</span>, <span class="comment">// Performs a search query.</span>
+	convert_links : <span>boolean</span>, <span class="comment">//Converts hashtags to links</span>
 	image_size : <span>int</span>, <span class="comment">// The size of your avatar.</span>
 	loader_text : <span>'loading tweets'</span>, <span class="comment">// loading text</span>
+	no_result : <span>'No tweets found'</span> <span class="comment">// no results text</span>
 });</pre>
-				
+			
+			<p>Since jtwt.js makes use of Twitter's Search API, you can also perform search queries instead of displaying a users recent tweets.</p>
+			
+			<p>To make use of this function, just assign the query option with suitable search query. There is no need for a username, you just need a query. If there is any username assigned, jtwt will just overwrite it with the given query.</p> 
+
+			<pre>$('#twitter').jtwt({
+	query : <span>'#batman'</span>, <span class="comment">//Tweets with the hashtag #batman</span>
+});</pre>
+
+			<p>jtwt can perform any search query that is valid to the syntax of Twitter's search function. For more information please visit: <a href="https://dev.twitter.com/docs/using-search" target="_blank">https://dev.twitter.com/docs/using-search</a></p>
+	
 		</section>
 		
 		<section>

@@ -4,9 +4,9 @@
 
  	$.fn.jtwt = function(options) { 
 
-			//Set the default values, use comma to separate the settings, example:
+			//Declare defaults
 			var defaults = {
-				username : 'google',
+				username : 'harbor',
 				query: '',
                 count : 4,
                 image_size: 48,
@@ -16,9 +16,10 @@
                 
 			}
 
+			//Merge default with options
 			var options =  $.extend(defaults, options);
 
-			// parseTwitterDate function by http://stackoverflow.com/users/367154/brady - Special thanks to @mikloshenrich
+			// customized parseTwitterDate. Base by http://stackoverflow.com/users/367154/brady - Special thanks to @mikloshenrich
 			var parseTwitterDate = function(tdate) {
     
 	    			var system_date = new Date(tdate.replace(/^\w+ (\w+) (\d+) ([\d:]+) \+0000 (\d+)$/, "$1 $2 $4 $3 UTC"));
@@ -50,6 +51,7 @@
 				$(".jtwt", obj).append('<li class="jtwt_loader jtwt_tweet" style="display:none;">' + o.loader_text + '</li>');	
 				$(".jtwt_loader", obj).fadeIn('slow');
 		
+				//Check if there is a search query given, if not fetch user tweets
 				if(o.query) {
 					
 					q = encodeURIComponent(o.query);
@@ -62,6 +64,7 @@
 				
 				console.log(q);
 		
+				//get the tweets from the API
 				$.getJSON('http://search.twitter.com/search.json?q=' + q + '&callback=?', function(data){ 
 
 					var results = data['results'];
@@ -108,6 +111,7 @@
 						
 					} else {
 						
+						//If there are not any tweets, display the "no results" container
 						$(".jtwt_loader", obj).fadeOut('fast', function() {
 							
 							$(".jtwt", obj).append('<li class="jtwt_noresult jtwt_tweet" style="display:none;">' + o.no_result + '</li>');
@@ -117,8 +121,6 @@
 						
 						
 					}
-					
-					
 		
 					$(".jtwt_loader", obj).fadeOut('fast');   
            
