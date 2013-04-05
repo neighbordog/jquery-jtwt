@@ -61,8 +61,6 @@
 					q = 'from:' + encodeURIComponent(o.username);
 					
 				}
-				
-				console.log(q);
 		
 				//get the tweets from the API
 				$.getJSON('http://search.twitter.com/search.json?q=' + q + '&callback=?', function(data){ 
@@ -71,6 +69,7 @@
 					
 					if(results.length) {
 						
+						//Loop through results and append them to the parent
 						for(var i = 0; i < o.count && i < results.length; i++) {
 						
 							var item = results[i];
