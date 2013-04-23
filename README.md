@@ -1,34 +1,46 @@
 # jtwt.js - a simple jQuery plugin for the twitter Search API
-Usage
+
+jtwt.js is an easy-to-use jQuery plugin that allows you to display your recent tweets on your website or elsewhere.
+
+## Usage
 
 After you downloaded and unzipped jtwt you will need to implement the jQuery library in the **<head>** area of your document, like this:
 
-```<script type="text/javascript" src="js/jquery.js"></script>```
+```
+<script type="text/javascript" src="js/jquery.js"></script>
+```
 
 Add the jtwt.js and the jtwt.css below the jQuery library:
 
-```<script type="text/javascript" src="js/jtwt.min.js"></script>
-<link rel="stylesheet" href="css/jtwt.css" />```
+```
+<script type="text/javascript" src="js/jtwt.min.js"></script>
+<link rel="stylesheet" href="css/jtwt.css" />
+```
 
 Now initialize the jtwt plugin between a **$(window).load(function() {** and a **});**.
 
-```<script type="text/javascript">
+```
+<script type="text/javascript">
   $(window).load(function() {
 		$('#twitter').jtwt({
 			username : 'yourusername'
 		});
 	});
-</script>```
+</script>
+```
 
 At last, we need to create the already declared container for our twitter widget:
 
-```<div id="twitter"></div>```
+```
+<div id="twitter"></div>
+```
 
 ## Options
 
 jtwt.js comes with a bunch of options to create the best experience for your users.
 
-```$('#twitter').jtwt({
+```
+$('#twitter').jtwt({
 	count : int, // The number of displayed tweets.
 	username : 'yourusername', // Your username.
 	query : 'searchquery', // Performs a search query.
@@ -36,15 +48,18 @@ jtwt.js comes with a bunch of options to create the best experience for your use
 	image_size : int, // The size of your avatar.
 	loader_text : 'loading tweets', // loading text
 	no_result : 'No tweets found' // no results text
-});```
+});
+```
 
 Since jtwt.js makes use of Twitter's Search API, you can also perform search queries instead of displaying a users recent tweets.
 
 To make use of this function, just assign the query option with suitable search query. There is no need for a username, you just need a query. If there is any username assigned, jtwt will just overwrite it with the given query.
 
-```$('#twitter').jtwt({
+```
+$('#twitter').jtwt({
 	query : '#batman', //Tweets with the hashtag #batman
-});```
+});
+```
 
 jtwt can perform any search query that is valid to the syntax of Twitter's search function. For more information please visit: [https://dev.twitter.com/docs/using-search](https://dev.twitter.com/docs/using-search)
 
