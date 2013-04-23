@@ -4,7 +4,7 @@ jtwt.js is an easy-to-use jQuery plugin that allows you to display your recent t
 
 ## Usage
 
-Atf first you will need to implement the jQuery library in the ```<head>``` area of your document, like this:
+At first you will need to implement the jQuery library in the ```<head>``` area of your document, like this:
 
 ```
 <script type="text/javascript" src="js/jquery.js"></script>
