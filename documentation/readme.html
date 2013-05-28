@@ -1,361 +1,135 @@
-<!DOCTYPE html>
-<html>
-<head>
+//jtwt.js by Harbor (http://jtwt.hrbor.com)
 
-	<title>jtwt.js - documentation</title>
+(function($){
+
+ 	$.fn.jtwt = function(options,callback) { 
+
+			//Declare defaults
+			var defaults = {
+				username : 'harbor',
+				query: '',
+                count : 4,
+                image_size: 48,
+                convert_links: true,
+                loader_text: 'loading new tweets',
+                no_result: 'No recent tweets found'
+                
+			}
+			
+			callback = (typeof callback === "undefined") ? "null" : callback;
+
+			//Merge default with options
+			var options =  $.extend(defaults, options);
+
+			// customized parseTwitterDate. Base by http://stackoverflow.com/users/367154/brady - Special thanks to @mikloshenrich
+			var parseTwitterDate = function(tdate) {
+    
+	    			var system_date = new Date(tdate.replace(/^\w+ (\w+) (\d+) ([\d:]+) \+0000 (\d+)$/, "$1 $2 $4 $3 UTC"));
+	    			var user_date = new Date();
 	
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="../src/jquery.jtwt.js"></script>
-	<script type="text/javascript">
-		$(window).load(function() {
+	    			var diff = Math.floor((user_date - system_date) / 1000);
+	    			if (diff <= 1) {return "just now";}
+	    			if (diff < 20) {return diff + " seconds ago";}
+	    			if (diff < 40) {return "half a minute ago";}
+	    			if (diff < 60) {return "less than a minute ago";}
+	    			if (diff <= 90) {return "one minute ago";}
+	    			if (diff <= 3540) {return Math.round(diff / 60) + " minutes ago";}
+	    			if (diff <= 5400) {return "1 hour ago";}
+	    			if (diff <= 86400) {return Math.round(diff / 3600) + " hours ago";}
+	    			if (diff <= 129600) {return "1 day ago";}
+	    			if (diff < 604800) {return Math.round(diff / 86400) + " days ago";}
+	    			if (diff <= 777600) {return "1 week ago";}
+	    			return "on " + system_date;
+    
+    		}
+    		
+    		return this.each(function() {
+    		
+				var o = options;
+                var obj = $(this); 
+                var q; 
+                
+				$(obj).append('<ul class="jtwt"></ul>');	
+				$(".jtwt", obj).append('<li class="jtwt_loader jtwt_tweet" style="display:none;">' + o.loader_text + '</li>');	
+				$(".jtwt_loader", obj).fadeIn('slow');
 		
-			$('#twitter').jtwt({
+				//Check if there is a search query given, if not fetch user tweets
+				if(o.query) {
+					
+					q = encodeURIComponent(o.query);
+					
+				} else {
+					
+					q = 'from:' + encodeURIComponent(o.username);
+					
+				}
+		
+				//get the tweets from the API
+				$.getJSON('http://search.twitter.com/search.json?q=' + q + '&callback=?', function(data){ 
+
+					var results = data['results'];
+					
+					if(results.length) {
+						
+						//Loop through results and append them to the parent
+						for(var i = 0; i < o.count && i < results.length; i++) {
+						
+							var item = results[i];
+							
+							jtweet = '<li class="jtwt_tweet">';
+		
+			                if (o.image_size) {
+			                
+			                	today = new Date();
+			  
+				                jtweet += '<div class="jtwt_picture">';
+				                jtweet += '<a href="http://twitter.com/' + item.from_user + '">'
+				                jtweet += '<img width="' + o.image_size +'" height="' + o.image_size + '" src="' + item.profile_image_url + '" />';
+				                jtweet += '</a>';
+				                jtweet += '</div>';
 			
-				username: "google",
-				count: 5,
-				image_size: 24
-			
+			                } 
+		
+			                var tweettext = item.text;
+			                var tweetdate = parseTwitterDate(item.created_at);
+			                
+			                if (o.convert_links) {
+		
+				                tweettext = tweettext.replace(/(http\:\/\/[A-Za-z0-9\/\.\?\=\-]*)/g,'<a href="$1">$1</a>');
+				                tweettext = tweettext.replace(/@([A-Za-z0-9\/_]*)/g,'<a href="http://twitter.com/$1">@$1</a>');
+				                tweettext = tweettext.replace(/#([A-Za-z0-9\/\.]*)/g,'<a href="http://twitter.com/search?q=$1">#$1</a>');
+	
+			                }
+		
+			                jtweet += '<p class="jtwt_tweet_text">' + tweettext + '</p>';
+			                jtweet += '<a href="http://twitter.com/' + item.from_user + '/statuses/' + item.id_str + '" class="jtwt_date">' + tweetdate + '</a>';
+			 
+			                jtweet += '</li>';   				
+			                
+			                $(".jtwt", obj).append(jtweet);
+	                
+		                }   
+						
+					} else {
+						
+						//If there are not any tweets, display the "no results" container
+						$(".jtwt_loader", obj).fadeOut('fast', function() {
+							
+							$(".jtwt", obj).append('<li class="jtwt_noresult jtwt_tweet" style="display:none;">' + o.no_result + '</li>');
+							$(".jtwt_noresult", obj).fadeIn('slow');
+							
+						});   
+						
+						
+					}
+		
+					$(".jtwt_loader", obj).fadeOut('fast');   
+					if (typeof callback == 'function') { callback.call(this);}
+           
+				});
+
 			});
 			
-		});
-	</script>
-	
-	<link rel="stylesheet" href="../src/jtwt.css" />
-	
-	<style>
-	
-		* {
-		
-		  margin:0px;
-		  padding:0px;
-		  border:0px;
-		  text-decoration:none;
-		  font-weight: normal;
-		  -webkit-font-smoothing: antialiased;
-		  
-		}
-		
-		section, article, header, footer, div { display:block; }
-		
-		ul, ol { list-style:none; }
-		
-		p { text-align: justify; }
-		
-		a {
-		
-			color: white;
-		
-			}
-			
-		a:hover {
-		
-			text-decoration: underline;
-		
-			}
-		
-		body {
-		
-			margin: 0px;
-			padding: 0px;
-			
-			background: #494651;
-			
-			font: 16px/26px "Helvetica Neue", "Helvetica", "Arial", Sans-Serif;
-			color: #c5c0d2;
-			text-shadow: 0px 1px 1px rgba(0,0,0,0.28);
-			
-		
-			}
-			
-		
-		#wrapper {
-		
-			width: 463px;
-			margin:  100px auto;
-		
-			}
-			
-		section p {
-		
-			margin-bottom: 25px;
-			
-			}
-			
-		section *:last-child {
-		
-			margin-bottom: 0px;
-		
-			}
-			
-		header {
-		
-			margin-bottom: 65px;
-		
-			}
-			
-		section {
-			
-			margin-bottom: 40px;
-		
-			}
-		
-		header h1 {
-		
-			font-size:30px;
-			line-height:40px;
-			font-weight: 300;
-		
-			}
-			
-		header h1 span {
-			
-			font-weight: bold;
-			color: white;
-		
-			}
-			
-		header p {
-			
-			margin-bottom: 30px;
-		
-			}
-			
-		#button {
-		
-			background: #b94849;
-			color: white;
-			font-weight: bold;
-			text-transform: uppercase;
-			border-radius: 2px;
-			padding: 0px 24px;
-			line-height: 52px;
-			height: 52px;
-			display: inline-block;
-			box-shadow: 1px 1px 0px rgba(0,0,0,0.05). -1px -1px 0px rgba(0,0,0,0.05);
-			text-shadow: 0px -1px 0px rgba(0,0,0,0.35);
-		
-			}
-			
-		#button:hover {
-		
-			background: #a44041;
-		
-			}
-			
-		#button:active {
-			
-			top: 1px;
-		
-			}
-			
-		h2 {
-		
-			color: white; 
-			font-weight: bold;
-			font-size: 20px;
-			line-height: 20px;
-			margin-bottom: 25px;
-		
-			}
-			
-		p > span {
-			
-			color: white;
-		
-			}	
-			
-		pre {
-		
-			background: #26252b;
-			padding: 20px;
-			border-radius: 2px;
-			color: white;
-			font: 12px/26px "Monaco", monospace;
-			margin-bottom: 25px;
-			text-shadow: none;
-		
-			}
-			
-		pre span {
-		
-			color: #e25253;
-		
-			}
-			
-		span.comment {
-		
-			color: #625f69;
-		
-			}
-			
-		.jtwt {
-		
-			border-radius: 2px;
-			overflow: hidden;
-		
-			}
-			
-		.jtwt li {
-			
-			background: #38363f;
-			padding: 10px;
-			margin-bottom: 5px;
-		
-			}
-			
-		.jtwt .jtwt_tweet:last-child {
-		
-			margin-bottom: 0px;
-		
-			}
-			
-		.jtwt_picture {
-		
-			float: left;
-			margin-right: 10px;
-			
-			}
-			
-		.jtwt_picture img {
-		
-			border-radius: 2px;
-		
-			}
-			
-		.jtwt_tweet_text {
-		
-			margin-bottom: 0px;
-		
-			}
-			
-		.jtwt_date {
-		
-			display: inline-block;
-			width: 100%;
-			text-align: right;
-			line-height: 12px;
-			font-size: 12px;
-			
-			}
-			
-	</style>
-	
-</head>
-<body>
+    	}
 
-	<div id="wrapper">
-	
-		<header>
-		
-			<h1><span>jtwt.js</span> - a simple jQuery plugin for the twitter Search API</h1>
-			
-		</header>
-		
-		<section>
-		
-			<h2>Usage</h2>
-			<p>After you downloaded and unzipped jtwt you will need to implement the jQuery library in the <span>&lt;head&gt;</span> area of your document, like this:</p>
-			
-			<pre>&lt;script type="text/javascript" src="<span>js/jquery.js</span>"&gt;&lt;/script&gt;</pre>
-			
-			<p>Add the <span>jtwt.js</span> and the <span>jtwt.css</span> below the jQuery library:</p>
-
-			<pre>&lt;script type="text/javascript" src="<span>js/jtwt.min.js</span>"&gt;&lt;/script&gt;
-&lt;link rel="stylesheet" href="<span>css/jtwt.css</span>" /&gt;</pre>
-			
-			<p>Now initialize the jtwt plugin between a <span>$(window).load(function() {</span> and a <span>});</span>.</p>
-			
-			<pre>&lt;script type="text/javascript"&gt;
-	$(window).load(function() {
-		$('<span>#twitter</span>').jtwt({
-			username : <span class="comment">'yourusername'</span>
-		});
-	});
-&lt;/script&gt;</pre>
-			
-			<p>At last, we need to create the already declared container for our twitter widget:</p>
-			
-			<pre>&lt;div id="<span>twitter</span>">&lt;/div&gt;</pre>
-			
-		</section>
-		
-		<section>
-		
-			<h2>Demo</h2>
-			<div id="twitter"></div>
-		
-		</section>
-		
-		<section>
-		
-			<h2>Options</h2>
-			
-			<p>jtwt.js comes with a bunch of options to create the best experience for your users. </p>
-
-			<pre>$('#twitter').jtwt({
-	count : <span>int</span>, <span class="comment">// The number of displayed tweets.</span>
-	username : <span>'yourusername'</span>, <span class="comment">// Your username.</span>
-	query : <span>'searchquery'</span>, <span class="comment">// Performs a search query.</span>
-	convert_links : <span>boolean</span>, <span class="comment">//Converts hashtags to links</span>
-	image_size : <span>int</span>, <span class="comment">// The size of your avatar.</span>
-	loader_text : <span>'loading tweets'</span>, <span class="comment">// loading text</span>
-	no_result : <span>'No tweets found'</span> <span class="comment">// no results text</span>
-});</pre>
-			
-			<p>Since jtwt.js makes use of Twitter's Search API, you can also perform search queries instead of displaying a users recent tweets.</p>
-			
-			<p>To make use of this function, just assign the query option with suitable search query. There is no need for a username, you just need a query. If there is any username assigned, jtwt will just overwrite it with the given query.</p> 
-
-			<pre>$('#twitter').jtwt({
-	query : <span>'#batman'</span>, <span class="comment">//Tweets with the hashtag #batman</span>
-});</pre>
-
-			<p>jtwt can perform any search query that is valid to the syntax of Twitter's search function. For more information please visit: <a href="https://dev.twitter.com/docs/using-search" target="_blank">https://dev.twitter.com/docs/using-search</a></p>
-	
-		</section>
-		
-		<section>
-		
-			<h2>Changelog</h2>
-			<ul>
-			
-				<li><span>10/26/2012</span> - Added retweet support + Bug fix</li>
-				<li><span>1/15/2013</span> - Bug Fix + new time ago function (thanks to <a href="https://twitter.com/mikloshenrich/">@mikloshenrich</a>)</li>
-				<li><span>4/5/2013</span> - Changed to Twitter's search API + search query function</li>
-							
-			</ul>
-		
-		</section>
-		
-		<section>
-		
-			<h2>License</h2>
-			<p>jtwt.js is contributed under the <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">Creative Commons Attribution 3.0 Unported</a> license. You're free to use jtwt.js in personal and commercial projects.</p>
-		
-		</section>	
-		
-		<section>
-		
-			<h2>Support</h2>
-			<p><span>jtwt.js is provided "as-is", without any warranty and professional support.</span> However, we're happy to help if we can. <a href="mailto:support@hrbor.com">Feel to drop us a line via email</a> or <a href="http://twitter.com/harborco">Twitter</a>. It may take up to 48 hours till you receive an answer.</p>
-		
-		</section>	
-		
-		<section>
-		
-			<h2>Buy me a beer</h2>
-			<p>We're working hard to make jtwt.js better. If you're happy with the plugin feel free to buy as a beer or two. Thanks for your support!</p>
-			
-			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="8Q3CXA8XZRS9Y">
-				<input type="image" src="http://hrbor.com/labs/jtwt/img/buymeabeer.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-			</form>
-		
-		</section>	
-			
-	</div>
-
-</body>
-</html>
+})(jQuery);
