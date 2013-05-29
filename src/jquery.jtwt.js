@@ -2,7 +2,7 @@
 
 (function($){
 
- 	$.fn.jtwt = function(options) { 
+ 	$.fn.jtwt = function(options,callback) { 
 
 			//Declare defaults
 			var defaults = {
@@ -15,6 +15,8 @@
                 no_result: 'No recent tweets found'
                 
 			}
+			
+			callback = (typeof callback === "undefined") ? "null" : callback;
 
 			//Merge default with options
 			var options =  $.extend(defaults, options);
@@ -122,6 +124,7 @@
 					}
 		
 					$(".jtwt_loader", obj).fadeOut('fast');   
+					if (typeof callback == 'function') { callback.call(this);}
            
 				});
 
