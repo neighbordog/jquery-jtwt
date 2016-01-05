@@ -2,6 +2,10 @@
 
 jtwt.js is an easy-to-use jQuery plugin that allows you to display your recent tweets on your website or elsewhere.
 
+#Warning
+
+This project is not maintened anymore. Since Twitter API Ver. 1.1  all relevant endpoints are protected and are requiring authentication through the user. Authorization-free fetching of public data such as tweets is therefore not possible anymore, which makes jquery.jtwt's original purpose obsolete. 
+
 ## Usage
 
 At first you will need to implement the jQuery library in the ```<head>``` area of your document, like this:
